@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { Container, ButtonsContainer } from "./styles";
 import { Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import TodoTable from "../TodoTable/TodoTable";
-import AddTodoDialog from "../AddTodoDialog/AddTodoTialog";
-import { Todo, TodoRequiredFields } from "shared/types";
-import EditTodoDialog from "../EditTodoDialog/EditTodoDialog";
+import { Todo } from "shared/types";
 import DeleteTodoDialog from "../DeleteTodoDialog/DeleteTodoDialog";
 import { EMPTY_TODO, ERROR_MESSAGES, SUCCESS_MESSAGES } from "shared/constants";
-import {
-  getAllTodos,
-  deleteTodo,
-  getTodoById,
-  updateTodo,
-  createTodo,
-} from "shared/utils/api";
 import NotificationSnackbar from "shared/components/Snackbar";
+import { RootState } from "store/store";
+import {
+  setSelectedTodo,
+  deleteTodoAsync,
+  getTodosAsync,
+} from "store/actions/todos";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 
 const HomeScreen = () => {
   const [focusedTodo, setFocusedTodo] = useState<Todo>(EMPTY_TODO);
@@ -22,15 +24,18 @@ const HomeScreen = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState(false);
-  const [showAddTodoModal, setShowAddTodoModal] = useState(false);
   const [showDeleteTodoModal, setShowDeleteTodoModal] = useState(false);
-  const [showEditTodoModal, setShowEditTodoModal] = useState(false);
+  const navigate = useNavigate();
+  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  const updatedTodos = useSelector((state: RootState) => state.todos.todos);
+  const notificationMessage = useSelector(
+    (state: RootState) => state.todos.message
+  );
 
   useEffect(() => {
     (async () => {
       try {
-        const allTodos = await getAllTodos();
-        setTodos(allTodos);
+        await dispatch(getTodosAsync());
         setError(false);
       } catch (err) {
         setShowSnackbar(true);
@@ -38,29 +43,23 @@ const HomeScreen = () => {
         setError(true);
       }
     })();
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (notificationMessage) {
+      setShowSnackbar(true);
+      setSnackbarMessage(notificationMessage);
+    }
+  }, [notificationMessage]);
+
+  useEffect(() => {
+    if (updatedTodos.length > 0) {
+      setTodos(updatedTodos);
+    }
+  }, [updatedTodos]);
 
   const startDeleteTodo = () => {
     setShowDeleteTodoModal(true);
-  };
-
-  const onAddTodo = async (todo: TodoRequiredFields) => {
-    const todoToCreate = {
-      message: todo.message,
-      completed: todo.completed,
-      priority: todo.priority,
-    };
-    try {
-      const newTodo = await createTodo(todoToCreate);
-      setTodos((todos) => [...todos, newTodo]);
-      setShowSnackbar(true);
-      setSnackbarMessage(SUCCESS_MESSAGES.ADD_TODO);
-    } catch (err) {
-      setShowSnackbar(true);
-      setSnackbarMessage(ERROR_MESSAGES.ADD_TODO);
-    } finally {
-      onCloseAddTodoModal();
-    }
   };
 
   const onCloseDeleteTodoModal = () => {
@@ -68,40 +67,13 @@ const HomeScreen = () => {
     setShowDeleteTodoModal(false);
   };
 
-  const startEditTodo = () => {
-    setShowEditTodoModal(true);
-  };
-
-  const onEditTodo = async (modifiedTodo: Todo) => {
-    try {
-      const updatedTodo = await updateTodo(modifiedTodo._id, modifiedTodo);
-      const updatedTodos = todos.map((todo) => {
-        if (updatedTodo._id !== todo._id) {
-          return todo;
-        }
-        return updatedTodo;
-      }, todos);
-      setShowSnackbar(true);
-      setSnackbarMessage(SUCCESS_MESSAGES.UPDATE_TODO);
-      setTodos(updatedTodos);
-    } catch (err) {
-      setShowSnackbar(true);
-      setSnackbarMessage(ERROR_MESSAGES.UPDATE_TODO);
-    } finally {
-      onCloseEditTodoModal();
-    }
-  };
-
-  const onCloseEditTodoModal = () => {
-    setFocusedTodo(EMPTY_TODO);
-    setShowEditTodoModal(false);
-  };
-
   const onDeleteTodo = async () => {
     const focusedTodoID = focusedTodo._id;
     try {
-      const deletedTodo = await deleteTodo(focusedTodoID);
-      setTodos((todos) => todos.filter((todo) => todo._id !== deletedTodo._id));
+      if (!focusedTodoID) {
+        throw new Error("Unable to update todo without id");
+      }
+      await dispatch(deleteTodoAsync(focusedTodoID));
       setShowSnackbar(true);
       setSnackbarMessage(SUCCESS_MESSAGES.DELETE_TODO);
     } catch (err) {
@@ -113,12 +85,12 @@ const HomeScreen = () => {
   };
 
   const startAddTodo = () => {
-    setShowAddTodoModal(true);
+    navigate("/add");
   };
 
-  const onCloseAddTodoModal = () => {
-    setFocusedTodo(EMPTY_TODO);
-    setShowAddTodoModal(false);
+  const startEditTodo = () => {
+    navigate("/edit");
+    dispatch(setSelectedTodo(focusedTodo));
   };
 
   const closeSnackbar = () => {
@@ -185,17 +157,6 @@ const HomeScreen = () => {
           </ButtonsContainer>
         </>
       )}
-      <AddTodoDialog
-        onAddTodo={onAddTodo}
-        open={showAddTodoModal}
-        onCloseDialog={onCloseAddTodoModal}
-      />
-      <EditTodoDialog
-        open={showEditTodoModal}
-        todo={focusedTodo}
-        onEditTodo={onEditTodo}
-        onCloseDialog={onCloseEditTodoModal}
-      />
       <DeleteTodoDialog
         open={showDeleteTodoModal}
         onDeleteTodo={onDeleteTodo}

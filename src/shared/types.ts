@@ -11,3 +11,9 @@ export type TodoRequiredFields = {
   priority: string;
   completed: boolean;
 };
+
+export type TodosState = {
+  todos: Todo[];
+  loading: boolean;
+  error: string | null;
+};

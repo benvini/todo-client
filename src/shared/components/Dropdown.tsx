@@ -14,6 +14,7 @@ type DropdownProps = {
   onChange: (event: SelectChangeEvent) => void;
   children: ReactNode;
   sx?: SxProps;
+  fullWidth?: boolean;
 };
 
 const Dropdown = ({
@@ -22,10 +23,11 @@ const Dropdown = ({
   label,
   onChange,
   children,
+  fullWidth,
   sx,
 }: DropdownProps) => {
   return (
-    <FormControl fullWidth sx={sx}>
+    <FormControl fullWidth={fullWidth} sx={sx}>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
       <Select
         labelId="demo-simple-select-label"

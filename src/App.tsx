@@ -1,15 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-import HomeScreen from "./screens/HomeScreen/components/HomeScreen/HomeScreen";
+import { Provider } from "react-redux";
+import { router } from "./navigation/navigation";
+import store from "store/store";
 
 const App = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <HomeScreen />,
-    },
-  ]);
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 };
 
 export default App;
