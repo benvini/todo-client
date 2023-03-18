@@ -1,3 +1,4 @@
+import { COLOR } from "shared/Color";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -10,4 +11,9 @@ export const Container = styled.div`
 export const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+export const Title = styled.h2`
+  color: ${COLOR.PRIMARY};
+  margin-bottom: 30px;
 `;

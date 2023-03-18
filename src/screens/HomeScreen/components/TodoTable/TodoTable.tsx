@@ -1,17 +1,16 @@
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
 import { useCallback } from "react";
 import moment from "moment";
 import { EMPTY_TODO } from "shared/constants";
 import { Todo } from "shared/types";
 import { COLOR } from "shared/Color";
+import {
+  TableContainer,
+  Table,
+  TableRow,
+  TableCell,
+  Thead,
+  Tbody,
+} from "./styles";
 
 type TodoTableProps = {
   todos: Todo[];
@@ -50,13 +49,10 @@ const TodoTable = ({ todos, focusedTodo, setFocusedTodo }: TodoTableProps) => {
       <TableRow
         key={todo._id}
         onClick={() => onTodoClicked(todo._id)}
-        sx={{
-          backgroundColor:
-            focusedTodo?._id === todo._id ? COLOR.BLUE : undefined,
-        }}
+        focused={focusedTodo?._id === todo._id}
       >
         <TableCell>{todo.message}</TableCell>
-        <TableCell sx={{ color: todo.completed ? COLOR.SUCCESS : COLOR.ERROR }}>
+        <TableCell color={todo.completed ? COLOR.SUCCESS : COLOR.ERROR}>
           {todo.completed ? "Done" : "In Progress"}
         </TableCell>
         <TableCell>{todo.priority}</TableCell>
@@ -68,17 +64,17 @@ const TodoTable = ({ todos, focusedTodo, setFocusedTodo }: TodoTableProps) => {
   }, [focusedTodo, onTodoClicked, todos]);
 
   return (
-    <TableContainer sx={{ width: "60%", marginY: 4 }} component={Paper}>
-      <Table sx={{ width: "100%" }} aria-label="simple table">
-        <TableHead>
+    <TableContainer>
+      <Table>
+        <Thead>
           <TableRow>
             <TableCell>Message</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Priority</TableCell>
             <TableCell>Created At</TableCell>
           </TableRow>
-        </TableHead>
-        <TableBody>{renderTodos()}</TableBody>
+        </Thead>
+        <Tbody>{renderTodos()}</Tbody>
       </Table>
     </TableContainer>
   );

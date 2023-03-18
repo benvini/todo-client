@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, ButtonsContainer } from "./styles";
+import { Container, ButtonsContainer, Title } from "./styles";
 import { Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -108,7 +108,7 @@ const HomeScreen = () => {
 
   return (
     <Container>
-      <Typography>Todo App</Typography>
+      <Title>Todo App</Title>
       {!todos?.length ? (
         <>
           <Typography sx={{ marginY: 4 }}>No todos available.</Typography>
