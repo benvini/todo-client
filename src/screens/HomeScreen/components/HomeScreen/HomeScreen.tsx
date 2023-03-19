@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
@@ -28,12 +28,12 @@ const HomeScreen = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState(false);
   const [showDeleteTodoModal, setShowDeleteTodoModal] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
   const updatedTodos = useSelector((state: RootState) => state.todos.todos);
-  const notificationMessage = useSelector(
-    (state: RootState) => state.todos.message
-  );
+  const lastNotificationMessage = useRef("");
+  const notificationMessage = location.state?.message;
 
   useEffect(() => {
     (async () => {
@@ -51,9 +51,13 @@ const HomeScreen = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (notificationMessage) {
+    if (
+      notificationMessage &&
+      notificationMessage !== lastNotificationMessage.current
+    ) {
       setShowSnackbar(true);
       setSnackbarMessage(notificationMessage);
+      lastNotificationMessage.current = notificationMessage;
     }
   }, [notificationMessage]);
 
@@ -98,6 +102,7 @@ const HomeScreen = () => {
 
   const closeSnackbar = () => {
     setShowSnackbar(false);
+    lastNotificationMessage.current = "";
   };
 
   if (isLoading) {

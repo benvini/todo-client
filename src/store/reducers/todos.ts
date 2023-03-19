@@ -4,7 +4,6 @@ import {
   UPDATE_TODO,
   CREATE_TODO,
   SET_SELECTED_TODO,
-  TODO_NOTIFICATION,
   GET_TODOS,
 } from "../actions/actionTypes";
 
@@ -46,11 +45,6 @@ const todoReducer = (
       return {
         ...state,
         selectedTodo: action.payload.todo,
-      };
-    case TODO_NOTIFICATION:
-      return {
-        ...state,
-        message: action.payload.message,
       };
     case GET_TODOS:
       return {

@@ -14,7 +14,7 @@ import {
 } from "shared/constants";
 import { Todo, TodoRequiredFields } from "shared/types";
 import Dropdown from "shared/components/Dropdown/Dropdown";
-import { createTodoAsync, todoNotification } from "store/actions/todos";
+import { createTodoAsync } from "store/actions/todos";
 import NotificationSnackbar from "shared/components/Snackbar/Snackbar";
 import { Container, FlexCol } from "./styles";
 import Title from "shared/components/Title/Title";
@@ -37,9 +37,8 @@ const AddTodoScreen = () => {
   const onSubmit = useCallback(async () => {
     try {
       await dispatch(createTodoAsync(formData));
-      dispatch(todoNotification(SUCCESS_MESSAGES.ADD_TODO));
       setFormData(EMPTY_TODO_FORM);
-      navigate("/");
+      navigate("/", { state: { message: SUCCESS_MESSAGES.ADD_TODO } });
     } catch (e) {
       setShowSnackbar(true);
       setSnackbarMessage(ERROR_MESSAGES.ADD_TODO);

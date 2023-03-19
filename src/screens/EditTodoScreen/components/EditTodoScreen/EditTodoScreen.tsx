@@ -16,7 +16,7 @@ import {
 } from "shared/constants";
 import NotificationSnackbar from "shared/components/Snackbar/Snackbar";
 import { Todo } from "shared/types";
-import { todoNotification, updateTodoAsync } from "store/actions/todos";
+import { updateTodoAsync } from "store/actions/todos";
 import { RootState } from "store/store";
 import Title from "shared/components/Title/Title";
 import { Container, CreatedAtTypography, FlexCol } from "./styles";
@@ -41,8 +41,7 @@ const EditTodoScreen = () => {
         throw new Error("Unable to update todo without id");
       }
       await dispatch(updateTodoAsync(inputTodo._id, inputTodo));
-      dispatch(todoNotification(SUCCESS_MESSAGES.UPDATE_TODO));
-      navigate("/");
+      navigate("/", { state: { message: SUCCESS_MESSAGES.UPDATE_TODO } });
     } catch (e) {
       setShowSnackbar(true);
       setSnackbarMessage(ERROR_MESSAGES.UPDATE_TODO);

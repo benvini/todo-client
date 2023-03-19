@@ -8,7 +8,6 @@ import {
   CREATE_TODO,
   TODO_ERROR,
   SET_SELECTED_TODO,
-  TODO_NOTIFICATION,
   GET_TODOS,
 } from "./actionTypes";
 
@@ -77,12 +76,5 @@ export const setSelectedTodo = (todo: Todo) => {
   return {
     type: SET_SELECTED_TODO,
     payload: { todo },
-  };
-};
-
-export const todoNotification = (message: string) => {
-  return {
-    type: TODO_NOTIFICATION,
-    payload: { message },
   };
 };
