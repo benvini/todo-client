@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 
 import TodoTable from "../TodoTable/TodoTable";
 import { Todo } from "shared/types";
@@ -17,16 +17,13 @@ import {
   getTodosAsync,
 } from "store/actions/todos";
 import Typography from "shared/components/Typography/Typography";
-import {
-  Container,
-  ButtonsContainer,
-  Title,
-  EmptyTableTypography,
-} from "./styles";
+import { Container, ButtonsContainer, EmptyTableTypography } from "./styles";
+import Title from "shared/components/Title/Title";
 
 const HomeScreen = () => {
   const [focusedTodo, setFocusedTodo] = useState<Todo>(EMPTY_TODO);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState(false);
@@ -42,10 +39,12 @@ const HomeScreen = () => {
     (async () => {
       try {
         await dispatch(getTodosAsync());
+        setIsLoading(false);
         setError(false);
       } catch (err) {
         setShowSnackbar(true);
         setSnackbarMessage(ERROR_MESSAGES.GET_TODOS);
+        setIsLoading(false);
         setError(true);
       }
     })();
@@ -100,6 +99,15 @@ const HomeScreen = () => {
   const closeSnackbar = () => {
     setShowSnackbar(false);
   };
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Title>Todo App</Title>
+        <CircularProgress />
+      </Container>
+    );
+  }
 
   if (error) {
     return (

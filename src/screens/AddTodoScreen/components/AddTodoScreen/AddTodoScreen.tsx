@@ -16,8 +16,8 @@ import { Todo, TodoRequiredFields } from "shared/types";
 import Dropdown from "shared/components/Dropdown/Dropdown";
 import { createTodoAsync, todoNotification } from "store/actions/todos";
 import NotificationSnackbar from "shared/components/Snackbar/Snackbar";
-import Typography from "shared/components/Typography/Typography";
-import { Container } from "./styles";
+import { Container, FlexCol } from "./styles";
+import Title from "shared/components/Title/Title";
 
 const AddTodoScreen = () => {
   const [formData, setFormData] = useState<TodoRequiredFields>(EMPTY_TODO_FORM);
@@ -37,8 +37,8 @@ const AddTodoScreen = () => {
   const onSubmit = useCallback(async () => {
     try {
       await dispatch(createTodoAsync(formData));
-      setFormData(EMPTY_TODO_FORM);
       dispatch(todoNotification(SUCCESS_MESSAGES.ADD_TODO));
+      setFormData(EMPTY_TODO_FORM);
       navigate("/");
     } catch (e) {
       setShowSnackbar(true);
@@ -65,13 +65,17 @@ const AddTodoScreen = () => {
   };
 
   const onBackClicked = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   return (
     <Container>
-      <Typography>Add Todo</Typography>
-      <Button onClick={onBackClicked}>Back</Button>
+      <FlexCol>
+        <Button onClick={onBackClicked} sx={{ marginY: 4 }}>
+          Back
+        </Button>
+        <Title>Add Todo</Title>
+      </FlexCol>
       <TextField
         autoFocus
         name={"message"}
@@ -108,6 +112,8 @@ const AddTodoScreen = () => {
         onClick={() => onSubmit()}
         color="success"
         disabled={!formData.message}
+        variant="contained"
+        sx={{ marginTop: 2 }}
       >
         Add Todo
       </Button>

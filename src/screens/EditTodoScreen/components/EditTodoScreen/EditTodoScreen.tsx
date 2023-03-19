@@ -18,8 +18,8 @@ import NotificationSnackbar from "shared/components/Snackbar/Snackbar";
 import { Todo } from "shared/types";
 import { todoNotification, updateTodoAsync } from "store/actions/todos";
 import { RootState } from "store/store";
-import Typography from "shared/components/Typography/Typography";
-import { Container, CreatedAtTypography } from "./styles";
+import Title from "shared/components/Title/Title";
+import { Container, CreatedAtTypography, FlexCol } from "./styles";
 
 const EditTodoScreen = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -77,13 +77,17 @@ const EditTodoScreen = () => {
   };
 
   const onBackClicked = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   return (
     <Container>
-      <Typography>Edit Todo</Typography>
-      <Button onClick={onBackClicked}>Back</Button>
+      <FlexCol>
+        <Button onClick={onBackClicked} sx={{ marginY: 4 }}>
+          Back
+        </Button>
+        <Title>Edit Todo</Title>
+      </FlexCol>
       <TextField
         autoFocus
         name={"message"}
@@ -124,7 +128,8 @@ const EditTodoScreen = () => {
 
       <Button
         onClick={() => onEditTodo()}
-        color="error"
+        color="secondary"
+        variant="contained"
         disabled={!inputTodo.message}
       >
         Update Todo

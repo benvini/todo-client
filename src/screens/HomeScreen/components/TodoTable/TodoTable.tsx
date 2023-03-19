@@ -7,7 +7,8 @@ import { TodoTableProps } from "./types";
 import {
   TableContainer,
   Table,
-  TableRow,
+  TableRowCells,
+  TableRowColumns,
   TableCell,
   Thead,
   Tbody,
@@ -41,7 +42,7 @@ const TodoTable = ({ todos, focusedTodo, setFocusedTodo }: TodoTableProps) => {
       return [];
     }
     return todos.map((todo) => (
-      <TableRow
+      <TableRowCells
         key={todo._id}
         onClick={() => onTodoClicked(todo._id)}
         focused={focusedTodo?._id === todo._id}
@@ -54,7 +55,7 @@ const TodoTable = ({ todos, focusedTodo, setFocusedTodo }: TodoTableProps) => {
         <TableCell>
           {moment(todo.createdAt).format("DD.MM.YYYY HH:mm")}
         </TableCell>
-      </TableRow>
+      </TableRowCells>
     ));
   }, [focusedTodo, onTodoClicked, todos]);
 
@@ -62,12 +63,12 @@ const TodoTable = ({ todos, focusedTodo, setFocusedTodo }: TodoTableProps) => {
     <TableContainer>
       <Table>
         <Thead>
-          <TableRow>
+          <TableRowColumns>
             <TableCell>Message</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Priority</TableCell>
             <TableCell>Created At</TableCell>
-          </TableRow>
+          </TableRowColumns>
         </Thead>
         <Tbody>{renderTodos()}</Tbody>
       </Table>

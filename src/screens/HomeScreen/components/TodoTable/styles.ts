@@ -4,7 +4,8 @@ import { TableCellProps, TableRowProps } from "./types";
 
 export const TableContainer = styled.div`
   width: 60%;
-  margin-bottom: 16px;
+  margin-bottom: 22px;
+  margin-top: 12px;
 `;
 
 export const Table = styled.table`
@@ -21,7 +22,7 @@ export const Thead = styled.thead`
     0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 `;
 
-export const TableRow = styled.tr<TableRowProps>`
+export const TableRowCells = styled.tr<TableRowProps>`
   background-color: ${(props) => (props.focused ? COLOR.BLUE : "none")};
   cursor: pointer;
   border-radius: 4px;
@@ -30,6 +31,12 @@ export const TableRow = styled.tr<TableRowProps>`
   &:hover {
     background-color: ${COLOR.BLUE};
   }
+`;
+
+export const TableRowColumns = styled.tr<TableRowProps>`
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 `;
 
 export const Tbody = styled.tbody``;
