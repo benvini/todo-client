@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import { Button, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 import TodoTable from "../TodoTable/TodoTable";
 import { Todo } from "shared/types";
@@ -17,8 +17,15 @@ import {
   getTodosAsync,
 } from "store/actions/todos";
 import Typography from "shared/components/Typography/Typography";
-import { Container, ButtonsContainer, EmptyTableTypography } from "./styles";
 import Title from "shared/components/Title/Title";
+import Button from "shared/components/Button/Button";
+import { COLOR } from "shared/Color";
+import {
+  Container,
+  ButtonsContainer,
+  EmptyTableTypography,
+  StyledButton,
+} from "./styles";
 
 const HomeScreen = () => {
   const [focusedTodo, setFocusedTodo] = useState<Todo>(EMPTY_TODO);
@@ -129,14 +136,9 @@ const HomeScreen = () => {
       {!todos?.length ? (
         <>
           <EmptyTableTypography>No todos available.</EmptyTableTypography>
-          <Button
-            variant="contained"
-            color="success"
-            onClick={startAddTodo}
-            sx={{ marginRight: 2 }}
-          >
+          <Button color={COLOR.SUCCESS} onClick={startAddTodo}>
             Add Todo
-          </Button>{" "}
+          </Button>
         </>
       ) : (
         <>
@@ -146,26 +148,18 @@ const HomeScreen = () => {
             setFocusedTodo={setFocusedTodo}
           />
           <ButtonsContainer>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={startAddTodo}
-              sx={{ marginRight: 2 }}
-            >
+            <StyledButton color={COLOR.SUCCESS} onClick={startAddTodo}>
               Add Todo
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
+            </StyledButton>
+            <StyledButton
+              color={COLOR.PURPLE}
               onClick={startEditTodo}
               disabled={!focusedTodo._id}
-              sx={{ marginRight: 2 }}
             >
               Edit Todo
-            </Button>
+            </StyledButton>
             <Button
-              variant="contained"
-              color="error"
+              color={COLOR.ERROR}
               onClick={startDeleteTodo}
               disabled={!focusedTodo._id}
             >

@@ -4,7 +4,7 @@ import { ThunkDispatch } from "redux-thunk";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, MenuItem, TextField, SelectChangeEvent } from "@mui/material";
+import { MenuItem, TextField, SelectChangeEvent } from "@mui/material";
 
 import Dropdown from "shared/components/Dropdown/Dropdown";
 import {
@@ -19,7 +19,9 @@ import { Todo } from "shared/types";
 import { updateTodoAsync } from "store/actions/todos";
 import { RootState } from "store/store";
 import Title from "shared/components/Title/Title";
-import { Container, CreatedAtTypography, FlexCol } from "./styles";
+import Button from "shared/components/Button/Button";
+import { COLOR } from "shared/Color";
+import { Container, CreatedAtTypography, FlexCol, BackButton } from "./styles";
 
 const EditTodoScreen = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -82,9 +84,7 @@ const EditTodoScreen = () => {
   return (
     <Container>
       <FlexCol>
-        <Button onClick={onBackClicked} sx={{ marginY: 4 }}>
-          Back
-        </Button>
+        <BackButton onClick={onBackClicked}>Back</BackButton>
         <Title>Edit Todo</Title>
       </FlexCol>
       <TextField
@@ -127,8 +127,7 @@ const EditTodoScreen = () => {
 
       <Button
         onClick={() => onEditTodo()}
-        color="secondary"
-        variant="contained"
+        color={COLOR.PURPLE}
         disabled={!inputTodo.message}
       >
         Update Todo

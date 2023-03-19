@@ -1,11 +1,13 @@
 import {
-  Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
 } from "@mui/material";
+
+import { COLOR } from "shared/Color";
+import Button from "shared/components/Button/Button";
 
 import { DeleteTodoDialogProps } from "./types";
 
@@ -24,7 +26,7 @@ const DeleteTodoDialog = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseDialog}>CANCEL</Button>
-        <Button onClick={onDeleteTodo} color="error">
+        <Button onClick={onDeleteTodo} color={COLOR.ERROR}>
           OK
         </Button>
       </DialogActions>

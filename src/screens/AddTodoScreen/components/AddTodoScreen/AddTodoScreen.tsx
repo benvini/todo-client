@@ -3,7 +3,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, MenuItem, SelectChangeEvent, TextField } from "@mui/material";
+import { MenuItem, SelectChangeEvent, TextField } from "@mui/material";
 
 import {
   EMPTY_TODO_FORM,
@@ -16,8 +16,9 @@ import { Todo, TodoRequiredFields } from "shared/types";
 import Dropdown from "shared/components/Dropdown/Dropdown";
 import { createTodoAsync } from "store/actions/todos";
 import NotificationSnackbar from "shared/components/Snackbar/Snackbar";
-import { Container, FlexCol } from "./styles";
 import Title from "shared/components/Title/Title";
+import { COLOR } from "shared/Color";
+import { BackButton, Container, FlexCol, StyledButton } from "./styles";
 
 const AddTodoScreen = () => {
   const [formData, setFormData] = useState<TodoRequiredFields>(EMPTY_TODO_FORM);
@@ -70,9 +71,7 @@ const AddTodoScreen = () => {
   return (
     <Container>
       <FlexCol>
-        <Button onClick={onBackClicked} sx={{ marginY: 4 }}>
-          Back
-        </Button>
+        <BackButton onClick={onBackClicked}>Back</BackButton>
         <Title>Add Todo</Title>
       </FlexCol>
       <TextField
@@ -107,15 +106,13 @@ const AddTodoScreen = () => {
         <MenuItem value={PRIORITY.MEDIUM}>{PRIORITY.MEDIUM}</MenuItem>
         <MenuItem value={PRIORITY.HIGH}>{PRIORITY.HIGH}</MenuItem>
       </Dropdown>
-      <Button
+      <StyledButton
+        color={COLOR.SUCCESS}
         onClick={() => onSubmit()}
-        color="success"
         disabled={!formData.message}
-        variant="contained"
-        sx={{ marginTop: 2 }}
       >
         Add Todo
-      </Button>
+      </StyledButton>
       <NotificationSnackbar
         open={showSnackbar}
         onClose={closeSnackbar}
