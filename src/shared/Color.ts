@@ -4,4 +4,5 @@ export const COLOR = {
   PURPLE: "#9c27b0",
   BLUE: "#2196f3",
   PRIMARY: "#3f51b5",
+  BLACK: "#1A2027",
 };

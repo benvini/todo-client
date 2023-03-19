@@ -1,5 +1,7 @@
-import { COLOR } from "shared/Color";
 import styled from "styled-components";
+
+import { COLOR } from "shared/Color";
+import Typography from "shared/components/Typography/Typography";
 
 export const Container = styled.div`
   display: flex;
@@ -16,4 +18,8 @@ export const ButtonsContainer = styled.div`
 export const Title = styled.h2`
   color: ${COLOR.PRIMARY};
   margin-bottom: 30px;
+`;
+
+export const EmptyTableTypography = styled(Typography)`
+  margin-bottom: 12px;
 `;

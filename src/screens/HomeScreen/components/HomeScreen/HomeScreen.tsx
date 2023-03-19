@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
-import { Container, ButtonsContainer, Title } from "./styles";
-import { Typography, Button } from "@mui/material";
+import {
+  Container,
+  ButtonsContainer,
+  Title,
+  EmptyTableTypography,
+} from "./styles";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -17,6 +22,7 @@ import {
 } from "store/actions/todos";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
+import Typography from "shared/components/Typography/Typography";
 
 const HomeScreen = () => {
   const [focusedTodo, setFocusedTodo] = useState<Todo>(EMPTY_TODO);
@@ -53,9 +59,7 @@ const HomeScreen = () => {
   }, [notificationMessage]);
 
   useEffect(() => {
-    if (updatedTodos.length > 0) {
-      setTodos(updatedTodos);
-    }
+    setTodos(updatedTodos || []);
   }, [updatedTodos]);
 
   const startDeleteTodo = () => {
@@ -100,8 +104,8 @@ const HomeScreen = () => {
   if (error) {
     return (
       <Container>
-        <Typography>Todo App</Typography>
-        <Typography sx={{ marginY: 4 }}>{ERROR_MESSAGES.GET_TODOS}</Typography>
+        <Title>Todo App</Title>
+        <Typography>{ERROR_MESSAGES.GET_TODOS}</Typography>
       </Container>
     );
   }
@@ -111,7 +115,7 @@ const HomeScreen = () => {
       <Title>Todo App</Title>
       {!todos?.length ? (
         <>
-          <Typography sx={{ marginY: 4 }}>No todos available.</Typography>
+          <EmptyTableTypography>No todos available.</EmptyTableTypography>
           <Button
             variant="contained"
             color="success"

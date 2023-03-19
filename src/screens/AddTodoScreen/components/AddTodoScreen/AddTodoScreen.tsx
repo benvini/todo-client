@@ -9,13 +9,7 @@ import {
 } from "shared/constants";
 import { Todo, TodoRequiredFields } from "shared/types";
 import Dropdown from "shared/components/Dropdown";
-import {
-  Button,
-  MenuItem,
-  SelectChangeEvent,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, MenuItem, SelectChangeEvent, TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +17,7 @@ import { createTodoAsync, todoNotification } from "store/actions/todos";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import NotificationSnackbar from "shared/components/Snackbar";
+import Typography from "shared/components/Typography/Typography";
 
 const AddTodoScreen = () => {
   const [formData, setFormData] = useState<TodoRequiredFields>(EMPTY_TODO_FORM);

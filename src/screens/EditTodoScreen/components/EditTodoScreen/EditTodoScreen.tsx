@@ -1,9 +1,9 @@
-import { Button, MenuItem, TextField, Typography } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
 import Dropdown from "shared/components/Dropdown";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Container } from "./styles";
+import { Container, CreatedAtTypography } from "./styles";
 import {
   EMPTY_TODO,
   ERROR_MESSAGES,
@@ -20,6 +20,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { todoNotification, updateTodoAsync } from "store/actions/todos";
 import { SelectChangeEvent } from "@mui/material";
 import { RootState } from "store/store";
+import Typography from "shared/components/Typography/Typography";
 
 const EditTodoScreen = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -117,9 +118,9 @@ const EditTodoScreen = () => {
         <MenuItem value={PRIORITY.HIGH}>{PRIORITY.HIGH}</MenuItem>
       </Dropdown>
       {inputTodo.createdAt && (
-        <Typography sx={{ marginBottom: 2, color: COLOR.ERROR }}>
+        <CreatedAtTypography>
           Created at: {moment(inputTodo.createdAt).format("DD.MM.YYYY HH:mm")}
-        </Typography>
+        </CreatedAtTypography>
       )}
 
       <Button
