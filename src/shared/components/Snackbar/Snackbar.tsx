@@ -1,12 +1,8 @@
 import { IconButton, Snackbar } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { SNACKBAR_DURATION } from "shared/constants";
 
-type NotificationSnackbarProps = {
-  open: boolean;
-  onClose: () => void;
-  message: string;
-};
+import { SNACKBAR_DURATION } from "shared/constants";
+import { NotificationSnackbarProps } from "./types";
 
 const NotificationSnackbar = ({
   open,

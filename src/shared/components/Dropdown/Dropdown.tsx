@@ -1,21 +1,6 @@
-import React, { ReactNode } from "react";
-import {
-  Select,
-  FormControl,
-  InputLabel,
-  SelectChangeEvent,
-  SxProps,
-} from "@mui/material";
+import { Select, FormControl, InputLabel } from "@mui/material";
 
-type DropdownProps = {
-  value: string;
-  defaultValue: string;
-  label: string;
-  onChange: (event: SelectChangeEvent) => void;
-  children: ReactNode;
-  sx?: SxProps;
-  fullWidth?: boolean;
-};
+import { DropdownProps } from "./types";
 
 const Dropdown = ({
   value,

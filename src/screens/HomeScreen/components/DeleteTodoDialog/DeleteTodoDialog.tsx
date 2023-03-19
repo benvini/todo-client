@@ -7,11 +7,7 @@ import {
   DialogActions,
 } from "@mui/material";
 
-type DeleteTodoDialogProps = {
-  onDeleteTodo: () => void;
-  onCloseDialog: () => void;
-  open: boolean;
-};
+import { DeleteTodoDialogProps } from "./types";
 
 const DeleteTodoDialog = ({
   open,

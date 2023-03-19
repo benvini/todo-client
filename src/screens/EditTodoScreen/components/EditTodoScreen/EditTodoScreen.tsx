@@ -1,9 +1,12 @@
-import { Button, MenuItem, TextField } from "@mui/material";
-import Dropdown from "shared/components/Dropdown";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Container, CreatedAtTypography } from "./styles";
+import { Button, MenuItem, TextField, SelectChangeEvent } from "@mui/material";
+
+import Dropdown from "shared/components/Dropdown/Dropdown";
 import {
   EMPTY_TODO,
   ERROR_MESSAGES,
@@ -11,16 +14,12 @@ import {
   STATUS,
   SUCCESS_MESSAGES,
 } from "shared/constants";
-import { COLOR } from "shared/Color";
-import NotificationSnackbar from "shared/components/Snackbar";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import NotificationSnackbar from "shared/components/Snackbar/Snackbar";
 import { Todo } from "shared/types";
-import { AnyAction } from "redux";
-import { ThunkDispatch } from "redux-thunk";
 import { todoNotification, updateTodoAsync } from "store/actions/todos";
-import { SelectChangeEvent } from "@mui/material";
 import { RootState } from "store/store";
 import Typography from "shared/components/Typography/Typography";
+import { Container, CreatedAtTypography } from "./styles";
 
 const EditTodoScreen = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);

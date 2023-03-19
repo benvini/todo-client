@@ -1,28 +1,28 @@
 import { useEffect, useState } from "react";
-import {
-  Container,
-  ButtonsContainer,
-  Title,
-  EmptyTableTypography,
-} from "./styles";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import { Button } from "@mui/material";
 
 import TodoTable from "../TodoTable/TodoTable";
 import { Todo } from "shared/types";
 import DeleteTodoDialog from "../DeleteTodoDialog/DeleteTodoDialog";
 import { EMPTY_TODO, ERROR_MESSAGES, SUCCESS_MESSAGES } from "shared/constants";
-import NotificationSnackbar from "shared/components/Snackbar";
+import NotificationSnackbar from "shared/components/Snackbar/Snackbar";
 import { RootState } from "store/store";
 import {
   setSelectedTodo,
   deleteTodoAsync,
   getTodosAsync,
 } from "store/actions/todos";
-import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
 import Typography from "shared/components/Typography/Typography";
+import {
+  Container,
+  ButtonsContainer,
+  Title,
+  EmptyTableTypography,
+} from "./styles";
 
 const HomeScreen = () => {
   const [focusedTodo, setFocusedTodo] = useState<Todo>(EMPTY_TODO);

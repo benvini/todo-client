@@ -1,8 +1,9 @@
 import { useCallback } from "react";
 import moment from "moment";
+
 import { EMPTY_TODO } from "shared/constants";
-import { Todo } from "shared/types";
 import { COLOR } from "shared/Color";
+import { TodoTableProps } from "./types";
 import {
   TableContainer,
   Table,
@@ -11,12 +12,6 @@ import {
   Thead,
   Tbody,
 } from "./styles";
-
-type TodoTableProps = {
-  todos: Todo[];
-  focusedTodo: Todo;
-  setFocusedTodo: (actionTodo: Todo) => void;
-};
 
 const TodoTable = ({ todos, focusedTodo, setFocusedTodo }: TodoTableProps) => {
   const findTodoById = useCallback(
